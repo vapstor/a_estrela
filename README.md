@@ -1,5 +1,3 @@
 <h1 align="center">Algoritmo A*</h1>
 
-Esta é a implementação em Java do trabalho prático A1 para a disciplina **INE5633 - Sistemas Inteligentes** da UFSC.
-
-<!-- > If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there. -->
+<h3 align="center">Esta é a implementação em Java do trabalho prático A1 para a disciplina **INE5633 - Sistemas Inteligentes** da UFSC.</h3>
