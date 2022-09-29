@@ -1,4 +1,4 @@
-### <div style="width: 100%; text-align: center; margin: 0 auto">Algoritmo A*</div>
+<h1 align="center">Algoritmo A*</h1>
 
 Esta é a implementação em Java do trabalho prático A1 para a disciplina **INE5633 - Sistemas Inteligentes** da UFSC.
 
