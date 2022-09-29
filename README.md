@@ -1,4 +1,4 @@
-### <p style="text-align: "center"">Algoritmo A*
+### <p style="text-align: center">Algoritmo A*
 
 Esta é a implementação em Java do trabalho prático A1 para a disciplina **INE5633 - Sistemas Inteligentes** da UFSC.
 
