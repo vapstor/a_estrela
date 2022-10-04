@@ -22,21 +22,11 @@ public class App {
             State initialState = new State(input);
 
             // // Busca melhor caminho (com o menor custo).
-            // boolean isColumn = true;
-            // if (isColumn) {
-            // int[] firstColumn = getColumn(initialState, 0);
-            // int[] secondColumn = getColumn(initialState, 1);
-            // int[] thirdColumn = getColumn(initialState, 2);
-            // getCustoOrdenacao(firstColumn);
-            // } else {
-            // int[] firstLine = getLine(initialState, 0);
-            // int[] secondLine = getLine(initialState, 3);
-            // int[] thirdLine = getLine(initialState, 6);
-            // getCustoOrdenacao(thirdLine);
-            // }
-            // buscaHeuristica(initialState);
-
-            Utils.showDialog("Pecas fora do lugar", String.valueOf(howManyOutsidePosition(initialState)));
+            // double custoTotal = 0.0;
+            // getCustoTotalDoEstado(initialState);
+            
+            State finalState = realizaTroca(initialState, '0', '8');
+            Utils.showDialog("Pecas fora do lugar", String.valueOf(qtdPecasForaDoLugar(finalState)));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,6 +35,50 @@ public class App {
             sc.close();
             System.exit(Utils.SUCCESS_STATUS);
         }
+    }
+
+    private static State realizaTroca(State oldState, char first, char second) {
+        State newState = new State(oldState.getValue());
+        char[] values = newState.getValue().toCharArray();
+        for (int i = 0; i < values.length-1; i++) {
+            if(values[i] == first || values[i] == second) {
+                if(values[i] == first) {
+                    int idxSegundo = newState.getValue().indexOf(second);
+                    values[i] = second;
+                    values[idxSegundo] = first;
+                } else {
+                    int idxPrimeiro = newState.getValue().indexOf(first);
+                    values[i] = first;
+                    values[idxPrimeiro] = second;
+                }
+                break;
+            }
+        }
+        newState.setValue(String.valueOf(values));
+        return newState;
+    }
+
+    private static void getCustoTotalDoEstado(State state) {
+        int pecasForaDoLugar = qtdPecasForaDoLugar(state);
+        double custoTotal = 0.0;
+        boolean isColumn = true;
+        if (isColumn) {
+            int[] firstColumn = getColumn(state, 0);
+            int[] secondColumn = getColumn(state, 1);
+            int[] thirdColumn = getColumn(state, 2);
+            custoTotal =+ getCustoOrdenacao(firstColumn);
+            custoTotal =+ getCustoOrdenacao(secondColumn);
+            custoTotal =+ getCustoOrdenacao(thirdColumn);
+        } else {
+            int[] firstLine = getLine(state, 0);
+            int[] secondLine = getLine(state, 3);
+            int[] thirdLine = getLine(state, 6);
+            custoTotal =+ getCustoOrdenacao(secondLine);
+            custoTotal =+ getCustoOrdenacao(secondLine);
+            custoTotal =+ getCustoOrdenacao(thirdLine);
+        }
+        buscaHeuristica(null);
+
     }
 
     private static int[] getColumn(State state, int pos) {
@@ -83,17 +117,17 @@ public class App {
         }
     }
 
-    private static int howManyOutsidePosition(State state) {
+    private static int qtdPecasForaDoLugar(State state) {
         int pecasForaLugar = 9;
         for (int i = 0; i < state.getValue().length(); i++) {
-            if (isAtCorrectPosition(state.getValue().charAt(i), i)) {
+            if (isPosCorreta(state.getValue().charAt(i), i)) {
                 pecasForaLugar--;
             }
         }
         return pecasForaLugar;
     }
 
-    private static boolean isAtCorrectPosition(char c, int position) {
+    private static boolean isPosCorreta(char c, int position) {
         return Utils.finalState.getValue().charAt(position) == c;
     }
 
